@@ -14,6 +14,7 @@ const (
 	LineError LineType = iota
 
 	LineText
+	LineHeader
 	LineLink
 	LineList
 	LinePreformattedToggle
@@ -21,9 +22,10 @@ const (
 )
 
 type Line struct {
-	Type  LineType
-	Value string
-	URL   *url.URL // nil if not LineLink
+	Type		LineType
+	Value		string
+	URL		*url.URL // nil if not LineLink
+	HeadSize	string //should be nil if not LineHeader
 }
 
 type StateFunc func(line string) (StateFunc, Line)
@@ -32,6 +34,9 @@ const (
 	preformattedToggle = "```"
 	linkPrefix         = "=>"
 	bulletPoint	   = "* "
+	headerThree	   = "### "
+	headerTwo          = "## "
+	headerOne          = "# "
 )
 
 /* This code has been taken from the original project, but I think the
@@ -40,9 +45,19 @@ I will leave this decision to a future refactor. */
 /* XXX In addition, gemtext is normally written without line breaks. Parsing
 gemtext blocks into lines may also need to be handled. */
 func TextLine(line string) (StateFunc, Line) {
+	if strings.HasPrefix(line, headerThree) {
+		trimmed := strings.TrimLeft(line[len(linkPrefix):], " \t")
+		return TextLine, Line{Type: LineHeader, Value: trimmed, HeadSize: "3"}
+	} else if strings.HasPrefix(line, headerTwo) {
+		trimmed := strings.TrimLeft(line[len(linkPrefix):], " \t")
+		return TextLine, Line{Type: LineHeader, Value: trimmed, HeadSize: "2"}
+	} else if strings.HasPrefix(line, headerOne) {
+		trimmed := strings.TrimLeft(line[len(linkPrefix):], " \t")
+		return TextLine, Line{Type: LineHeader, Value: trimmed, HeadSize: "1"}
+	}
 	if strings.HasPrefix(line, linkPrefix) {
 		var (
-			trimmed  = strings.TrimLeft(line[len(linkPrefix):], " \t")
+			trimmed = strings.TrimLeft(line[len(linkPrefix):], " \t")
 			endofurl = strings.IndexAny(trimmed, " \t")
 			rawurl   string
 			alttext  string
@@ -59,9 +74,9 @@ func TextLine(line string) (StateFunc, Line) {
 		var parsedurl, err = url.Parse(rawurl)
 
 		if err != nil {
-			return TextLine, Line{LineError, fmt.Sprintf("Invalid URL: '%s'", rawurl), nil}
+			return TextLine, Line{LineError, fmt.Sprintf("Invalid URL: '%s'", rawurl), nil, "nil"}
 		}
-		return TextLine, Line{LineLink, alttext, parsedurl}
+		return TextLine, Line{Type: LineLink, Value: alttext, URL: parsedurl}
 	}
 	if strings.HasPrefix(line, bulletPoint) {
 		trimmed := strings.TrimLeft(line[len(bulletPoint):], "\t")

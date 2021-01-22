@@ -1,0 +1,15 @@
+plan for header support
+
+
+should not be too complex
+
+if: 
+starts with '### '
+	then encapsulate sanitised text in <h3>
+elif: 
+starts with '## '
+	then <h2>
+elif:
+'#' 
+	then <h1>
+ 

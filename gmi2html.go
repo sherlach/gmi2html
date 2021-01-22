@@ -31,6 +31,8 @@ func main() {
 			} else {
 				fmt.Printf("<p>%s</p>\n", html.EscapeString(item.Value))
 			}
+		case LineHeader:
+			fmt.Printf("<h%s>%s</h%s>\n", item.HeadSize, item.Value, item.HeadSize)
 		case LineLink:
 			var text = item.Value
 			if text == "" {

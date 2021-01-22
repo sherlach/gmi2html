@@ -12,8 +12,7 @@ website. I'm not going to add a link - if you know, you know.
 
 TODO
 
-- Refactoring desperately needed, os. module sometimes used, Printf sometimes used, for example. TrimPrefix instead of TrimLeft
+- Refactoring desperately needed, os. module sometimes used, Printf sometimes used, for example. TrimPrefix instead of TrimLeft. AND, there's a lot of self-repetition
 - Heading "Doctype html" et cetera
 - Similarly, Style from the BMW
-- Headings
 - Quotes
