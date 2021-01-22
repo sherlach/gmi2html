@@ -5,6 +5,7 @@ import (
 	"html"
 	"io"
 	"os"
+	"flag"
 )
 
 func main() {
@@ -12,6 +13,14 @@ func main() {
 
 	var preformatted = false
 	var listing = false
+
+	//flag variables
+	var title string
+
+	//flag declaration
+	flag.StringVar(&title, "t", "title", "Give your html document a title. Default is `title`")
+
+	flag.Parse()
 
 	var lineNumber = 0
 	for item := range lexer {
@@ -62,3 +71,12 @@ func main() {
 		}
 	}
 }
+
+
+func initial(string title) {
+	io.WriteString(os.Stdout, "<!DOCTYPE HTML>")
+	io.WriteString(os.Stdout, "<html lang=\"en\">")
+	io.WriteString(os.Stdout, "<meta charset=\"utf-8\">")
+	io.WriteString(os.Stdout, "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">")
+}
+	io.WriteString(os.Stdout, "<title>)
