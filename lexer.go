@@ -17,6 +17,7 @@ const (
 	LineHeader
 	LineLink
 	LineList
+	LineQuote
 	LinePreformattedToggle
 	LinePreformatted
 )
@@ -36,7 +37,8 @@ const (
 	bulletPoint	   = "* "
 	headerThree	   = "### "
 	headerTwo          = "## "
-	headerOne          = "# "
+	headerOne          = "#"
+	quote		   = "> "
 )
 
 /* This code has been taken from the original project, but I think the
@@ -46,13 +48,13 @@ I will leave this decision to a future refactor. */
 gemtext blocks into lines may also need to be handled. */
 func TextLine(line string) (StateFunc, Line) {
 	if strings.HasPrefix(line, headerThree) {
-		trimmed := strings.TrimLeft(line[len(linkPrefix):], " \t")
+		trimmed := strings.TrimLeft(line[len(headerThree):], " \t")
 		return TextLine, Line{Type: LineHeader, Value: trimmed, HeadSize: "3"}
 	} else if strings.HasPrefix(line, headerTwo) {
-		trimmed := strings.TrimLeft(line[len(linkPrefix):], " \t")
+		trimmed := strings.TrimLeft(line[len(headerTwo):], " \t")
 		return TextLine, Line{Type: LineHeader, Value: trimmed, HeadSize: "2"}
 	} else if strings.HasPrefix(line, headerOne) {
-		trimmed := strings.TrimLeft(line[len(linkPrefix):], " \t")
+		trimmed := strings.TrimLeft(line[len(headerOne):], " \t")
 		return TextLine, Line{Type: LineHeader, Value: trimmed, HeadSize: "1"}
 	}
 	if strings.HasPrefix(line, linkPrefix) {
@@ -81,6 +83,11 @@ func TextLine(line string) (StateFunc, Line) {
 	if strings.HasPrefix(line, bulletPoint) {
 		trimmed := strings.TrimLeft(line[len(bulletPoint):], "\t")
 		return TextLine, Line{Type: LineList, Value: trimmed}
+	}
+	if strings.HasPrefix(line, quote) {
+		trimmed := strings.TrimLeft(line[len(quote):], " \t")
+		return TextLine, Line{Type: LineQuote, Value: trimmed}
+
 	}
 	if strings.HasPrefix(line, preformattedToggle) {
 		return PreFormattedLine, Line{

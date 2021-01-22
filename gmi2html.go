@@ -47,6 +47,8 @@ func main() {
 			}
 			fmt.Printf("<li>%s</li>\n", html.EscapeString(item.Value))
 			listing = true
+		case LineQuote:
+			fmt.Printf("<blockquote>%s</blockquote>\n", item.Value)
 		case LinePreformattedToggle:
 			if preformatted {
 				io.WriteString(os.Stdout, "</pre>\n")
