@@ -11,9 +11,17 @@ func main() {
 	var lexer = Lex(os.Stdin)
 
 	var preformatted = false
+	var listing = false
+
 	var lineNumber = 0
 	for item := range lexer {
 		lineNumber += 1
+		/* I find this ugly, but there was not clean way
+		to integrate this with the existing switch statement */
+		if listing && item.Type != LineList {
+			fmt.Println("</ul>\n")
+			listing = false
+		}
 		switch item.Type {
 		case LineError:
 			fmt.Printf("Error %d: %s\n", lineNumber, item.Value)
@@ -32,7 +40,11 @@ func main() {
 			var u = item.URL.String()
 			fmt.Printf("<a href='%s'>%s</a><br>\n", u, text)
 		case LineList:
+			if !listing {
+				fmt.Printf("<ul>\n")
+			}
 			fmt.Printf("<li>%s</li>\n", html.EscapeString(item.Value))
+			listing = true
 		case LinePreformattedToggle:
 			if preformatted {
 				io.WriteString(os.Stdout, "</pre>\n")
