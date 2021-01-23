@@ -13,9 +13,9 @@ website. I'm not going to add a link - if you know, you know.
 
 USAGE:
 
-gmi2html < input.gmi > output.html
-(Work in Progress)
+gmi2html -t TITLE < input.gmi > output.html
 
+(TITLE is the title you want the HTML page to have. Given `untitled` as default.)
 
 DISCLAIMERS:
 
@@ -26,10 +26,8 @@ gemini links will still be in gemini form - you may want to edit them.
 TODO
 
 - Refactoring desperately needed, os. module sometimes used, Printf sometimes used, for example. TrimPrefix instead of TrimLeft. AND, there's a lot of self-repetition
-- Heading "Doctype html" et cetera
-- Similarly, Style from the BMW
 - Error handling
-- Command line args:
+- Clean command line args
 
 to generate a full HTML document for you including doc and meta tags,
 and specify a title (which isn't a thing in Gemini)
