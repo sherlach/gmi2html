@@ -29,7 +29,9 @@ TODO
 - Refactoring desperately needed, os. module sometimes used, Printf sometimes used, for example. TrimPrefix instead of TrimLeft. AND, there's a lot of self-repetition
 - Error handling
 - Clean command line args
-- HTML closing tag
+- HTML closing tag at the end
+- favicon support??
+- footers
 
 to generate a full HTML document for you including doc and meta tags,
 and specify a title (which isn't a thing in Gemini)
