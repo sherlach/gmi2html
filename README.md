@@ -31,7 +31,7 @@ TODO
 - Clean command line args
 - HTML closing tag at the end
 - favicon support??
-- footers
+- footers including "last updated"
 
 to generate a full HTML document for you including doc and meta tags,
 and specify a title (which isn't a thing in Gemini)
