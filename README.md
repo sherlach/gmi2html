@@ -7,9 +7,10 @@ I have added support for additional aspects of gemtext such as quoting,
 lists, and headings. Style will be stolen from the best motherf$%@ing 
 website. I'm not going to add a link - if you know, you know.
 
-
-> go get github.com/sherlach/gmi2html
-> go install github.com/sherlach/gmi2html
+```
+$ go get github.com/sherlach/gmi2html
+$ go install github.com/sherlach/gmi2html
+```
 
 USAGE:
 
@@ -28,6 +29,7 @@ TODO
 - Refactoring desperately needed, os. module sometimes used, Printf sometimes used, for example. TrimPrefix instead of TrimLeft. AND, there's a lot of self-repetition
 - Error handling
 - Clean command line args
+- HTML closing tag
 
 to generate a full HTML document for you including doc and meta tags,
 and specify a title (which isn't a thing in Gemini)
