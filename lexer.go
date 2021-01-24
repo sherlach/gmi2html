@@ -23,10 +23,10 @@ const (
 )
 
 type Line struct {
-	Type		LineType
-	Value		string
-	URL		*url.URL // nil if not LineLink
-	HeadSize	string //should be nil if not LineHeader
+	Type     LineType
+	Value    string
+	URL      *url.URL // nil if not LineLink
+	HeadSize string   //should be nil if not LineHeader
 }
 
 type StateFunc func(line string) (StateFunc, Line)
@@ -34,11 +34,11 @@ type StateFunc func(line string) (StateFunc, Line)
 const (
 	preformattedToggle = "```"
 	linkPrefix         = "=>"
-	bulletPoint	   = "* "
-	headerThree	   = "### "
+	bulletPoint        = "* "
+	headerThree        = "### "
 	headerTwo          = "## "
 	headerOne          = "# "
-	quote		   = "> "
+	quote              = "> "
 )
 
 /* This code has been taken from the original project, but I think the
@@ -59,7 +59,7 @@ func TextLine(line string) (StateFunc, Line) {
 	}
 	if strings.HasPrefix(line, linkPrefix) {
 		var (
-			trimmed = strings.TrimLeft(line[len(linkPrefix):], " \t")
+			trimmed  = strings.TrimLeft(line[len(linkPrefix):], " \t")
 			endofurl = strings.IndexAny(trimmed, " \t")
 			rawurl   string
 			alttext  string
